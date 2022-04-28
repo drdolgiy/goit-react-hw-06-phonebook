@@ -2,7 +2,7 @@ import React from "react";
 import propTypes from "prop-types";
 import { ListItem, DeleteButton } from "./ContatcList.styled";
 
-export const ContactList = ({ filteredContact, deleteContact }) => {
+export const ContactList = ({contacts, filteredContact, deleteContact }) => {
     return (
         <ul>
             {filteredContact.map((contact) => {

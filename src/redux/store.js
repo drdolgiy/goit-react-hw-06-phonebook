@@ -7,7 +7,8 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER, } from "redux-persist";
+  REGISTER,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { contactsSlice } from 'redux/contactsSlice';
 import { filterSlice } from 'redux/filterSlice';
@@ -28,9 +29,10 @@ export const store = configureStore({
   
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({
+      serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    )
+    } )
   }    
 });
 

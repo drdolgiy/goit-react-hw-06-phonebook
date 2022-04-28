@@ -13,7 +13,7 @@ export const Form = () => {
         const form = e.currentTarget;
         const name = form.elements.name.value;
         const number = form.elements.number.value;
-        const contacts = { id: nanoid(), name: name, number: number };
+        const contacts = { id: nameInputId, name: name, number: number };
         dispatch(addContact(contacts));
         form.reset();
     };
