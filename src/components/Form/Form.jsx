@@ -1,38 +1,21 @@
-import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { nanoid } from "nanoid";
 import { ContactForm, ContactLabel, TelLabel, InputName } from "./Form.styled";
+import {addContact} from "redux/contactsSlice"
 
-export default function Form({onSubmit}) {
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
+export const Form = () => {
 
-    const handleChange = e => {
-        const { name, value } = e.target;
-
-        switch (name) {
-            case 'name':
-                setName(value);
-                break;
-            case 'number':
-                setNumber(value);
-                break;
-            default:
-                return
-        };
-    };
-
+    const dispatch = useDispatch();
     const nameInputId = nanoid();
-
-    const reset = () => {
-        setName('');
-        setNumber('');
-        return
-    };
   
     const handleSubmit = e => {       
         e.preventDefault();
-        onSubmit({ name, number });
-        reset();
+        const form = e.currentTarget;
+        const name = form.elements.name.value;
+        const number = form.elements.number.value;
+        const contacts = { id: nanoid(), name: name, number: number };
+        dispatch(addContact(contacts));
+        form.reset();
     };
 
     return (
@@ -41,8 +24,6 @@ export default function Form({onSubmit}) {
                 Name
                 <InputName
                     type="text"
-                    value={name}
-                    onChange={handleChange}
                     id={nameInputId}
                     name="name"
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -56,8 +37,6 @@ export default function Form({onSubmit}) {
                     Number
                     <input
                         type="tel"
-                        value={number}
-                        onChange={handleChange}
                         name="number"
                             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                         title="Phone number must be digits and can contain spaces, dashes, 
